@@ -1,0 +1,57 @@
+📈 Machine Learning-Based Single Asset Trading Strategy (Pfizer - PFE)
+🔍 Overview
+This project implements a machine learning-driven long/short trading strategy on Pfizer Inc. (PFE) stock using historical data from 2010-01-01 to 2025-04-16. The model predicts next-day returns and determines whether to take a $1M long or short position daily.
+
+🛠️ Methodology
+Data Extraction: Daily price and volume data for PFE stock using yfinance or equivalent APIs.
+
+Feature Engineering:
+
+Traditional: Returns, momentum, volatility, rolling statistics
+
+Novel: Market sentiment, sector correlations, lagged technical indicators
+
+Modeling Approach:
+
+Predicts next-day return using historical features (no lookahead bias)
+
+Models include Logistic Regression, XGBoost, and Random Forest
+
+Backtesting & Evaluation:
+
+Strict train/validation/test splits (2022–2025 used as pure out-of-sample)
+
+PnL computed using position × (today's close - previous close)
+
+Metrics: Cumulative PnL, Sharpe Ratio, Hit Ratio, Drawdown
+
+📊 Visualization
+Interactive plots showing cumulative returns over time
+
+Comparison against benchmark passive long-only strategy
+
+⚠️ Constraints
+No lookahead bias throughout data processing and modeling
+
+All rolling features normalized to prevent forward leakage
+
+Daily decisions made with only data available up to that day
+
+📝 How to Run
+Clone the repo
+
+Install dependencies: pip install -r requirements.txt
+
+Run the notebook: PFE_Strategy.ipynb
+
+View final results and plots in the outputs section
+
+📂 Contents
+PFE_Strategy.ipynb – Main notebook (feature engineering, modeling, evaluation)
+
+report.pdf – Project explanation, assumptions, and visualizations
+
+data/ – Historical stock data (optional if using live API)
+
+plots/ – PnL and feature charts
+
