@@ -1,57 +1,51 @@
-📈 Machine Learning-Based Single Asset Trading Strategy (Pfizer - PFE)
-🔍 Overview
-This project implements a machine learning-driven long/short trading strategy on Pfizer Inc. (PFE) stock using historical data from 2010-01-01 to 2025-04-16. The model predicts next-day returns and determines whether to take a $1M long or short position daily.
+# Machine-Learning-Single-Asset-Strategy
+Design a Machine Learning Single Asset Strategy using Pfizer stock [PFE] from 20100101 [YYYYMMDD] to 20250416 [YYYYMMDD].
 
-🛠️ Methodology
-Data Extraction: Daily price and volume data for PFE stock using yfinance or equivalent APIs.
+Every day, you can decide to either buy [Long] or sell [Short] USD 1 Million worth of the stock. The model must take only one position/decision [Long/Short] on any given day.
 
-Feature Engineering:
+You may use any publicly available data for creating features/models.
 
-Traditional: Returns, momentum, volatility, rolling statistics
+Research Directions:
+  - This submission expects creativity at all stages
+  - Design and test interesting features beyond standard ones like stock_return, change_in_volume, etc.
+  - The strategy is expected to outperform a baseline strategy where USD 1 Million is held long every trading day.
+  - Example: Sentiment around Pfizer stock, market share of most popular drug from Pfizer etc. 
+ - Candidates are free to use other stock information as well, with the only constraint being no lookahead bias.
 
-Novel: Market sentiment, sector correlations, lagged technical indicators
+⚠️ Key points to remember:
 
-Modeling Approach:
+  - [No Lookahead Bias] Ensure there is no forward bias in your data extraction, feature engineering, or modelling.
+  - [No Lookahead Bias] The Buy/Sell [Long/Short] decision on date "di" must not be influenced in any way by any data from dates > di.
+  - [Normalized Features] When using technical features like close or volume, normalize them using a rolling window to avoid adjustment biases.
 
-Predicts next-day return using historical features (no lookahead bias)
 
-Models include Logistic Regression, XGBoost, and Random Forest
+📁 The submission should be a [.zip file] containing:
 
-Backtesting & Evaluation:
+    A: .ipynb file demonstrating:
+     - Data extraction
+     - Data cleaning
+     - Proper handling of non-numeric features
+     - Feature engineering
+     - Modelling: The target of the model can be the next day return of PFE stock,   i.e., using all features on date di, predict the return on di+1
+     - Training vs Validation vs Out-of-Sample splits
+     - Data from 20220101 to 20250416 should be treated as pure out-of-sample
 
-Strict train/validation/test splits (2022–2025 used as pure out-of-sample)
+    B: Detailed pdf report explaining the same
 
-PnL computed using position × (today's close - previous close)
+PnL Calculation:
+  - PnL should be based on changes in daily closing prices.
+  - PnL can be marked as the difference between yesterday's close and today’s close, multiplied by the position.
+  - Ignore corporate actions, dividends, and other adjustments.
 
-Metrics: Cumulative PnL, Sharpe Ratio, Hit Ratio, Drawdown
+Data Representation:
+  - Data should be structured as a 2D NumPy array with shape (1 x num_dates).
+  - Each row corresponds to the stock, and each column represents the closing price/portfolio position on a specific date.
 
-📊 Visualization
-Interactive plots showing cumulative returns over time
+Avoid Forward Bias:
+  - Future data must not be used in decision-making.
+  - If a position is taken on date di, ensure only data available up to di is used for signal generation.
+  - Strategies using rolling statistics (e.g., moving averages, z-scores) must rely on past data only.
 
-Comparison against benchmark passive long-only strategy
-
-⚠️ Constraints
-No lookahead bias throughout data processing and modeling
-
-All rolling features normalized to prevent forward leakage
-
-Daily decisions made with only data available up to that day
-
-📝 How to Run
-Clone the repo
-
-Install dependencies: pip install -r requirements.txt
-
-Run the notebook: PFE_Strategy.ipynb
-
-View final results and plots in the outputs section
-
-📂 Contents
-PFE_Strategy.ipynb – Main notebook (feature engineering, modeling, evaluation)
-
-report.pdf – Project explanation, assumptions, and visualizations
-
-data/ – Historical stock data (optional if using live API)
-
-plots/ – PnL and feature charts
-
+PnL Visualization:
+  - Generate a PnL plot showing cumulative returns over time.
+  - The plot should clearly depict the performance trend of the strategy.
